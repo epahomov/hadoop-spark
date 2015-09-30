@@ -20,11 +20,14 @@ ENV MAVEN_OPTS "-Xmx3g -XX:MaxPermSize=1g -XX:ReservedCodeCacheSize=1g"
 ENV HADOOP_VERSION 2.6.0-cdh5.4.2
 
 RUN apt-get -y install curl
+RUN apt-get -y install git 
+
 RUN curl -s https://codeload.github.com/apache/spark/tar.gz/v1.5.1 | tar -xz -C /usr/local/
 WORKDIR /usr/local
-RUN ln -s spark-* spark
+RUN git clone https://github.com/apache/spark.git spark
 WORKDIR /usr/local/spark
-RUN mvn -e -X -Pyarn -Phadoop-2.6 \
+RUN git checkout 4f894dd6906311cb57add6757690069a18078783
+RUN mvn -Pyarn -Phadoop-2.6 \
  -Dhadoop.version=$HADOOP_VERSION \
  -Phive \
  -Phive-thriftserver \ 
