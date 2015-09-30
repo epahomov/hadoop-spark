@@ -24,7 +24,7 @@ RUN curl -s https://codeload.github.com/apache/spark/tar.gz/v1.5.1 | tar -xz -C 
 WORKDIR /usr/local
 RUN ln -s spark-* spark
 WORKDIR /usr/local/spark
-RUN mvn -Pyarn -Phadoop-2.6 \
+RUN mvn -e -X -Pyarn -Phadoop-2.6 \
  -Dhadoop.version=$HADOOP_VERSION \
  -Phive \
  -Phive-thriftserver \ 
