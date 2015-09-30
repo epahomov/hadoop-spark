@@ -1,13 +1,9 @@
-FROM ubuntu:14.04
+FROM java:7
 
 MAINTAINER Pakhomov Egor <pahomov.egor@gmail.com>
 
 RUN apt-get -y update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes software-properties-common python-software-properties
-RUN apt-add-repository -y ppa:webupd8team/java
-RUN apt-get -y update
-RUN /bin/echo debconf shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install oracle-java8-installer oracle-java8-set-default
 
 ENV MAVEN_VERSION 3.3.3
 RUN apt-get -y install curl
@@ -16,7 +12,7 @@ RUN curl -sSL http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binari
   && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 
 ENV MAVEN_HOME /usr/share/maven
-ENV MAVEN_OPTS "-Xmx3g -XX:MaxPermSize=1g -XX:ReservedCodeCacheSize=1g"
+ENV MAVEN_OPTS "-Xmx2g -XX:MaxPermSize=1g -XX:ReservedCodeCacheSize=1g"
 ENV HADOOP_VERSION 2.6.0-cdh5.4.2
 
 RUN apt-get -y install curl
